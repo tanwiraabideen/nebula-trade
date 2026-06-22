@@ -46,6 +46,8 @@ async function fetchAndUpdateTokens() {
 
             const tokens = await fetchWithRetry(url);
 
+            // console.log('Tokens fetched:', tokens.length);
+            // console.log('Tokens:', tokens);
             await prisma.$transaction(async (prisma) => {
                 for (const token of tokens) {
                     if (totalProcessed >= MAX_COINS) break;
@@ -505,5 +507,28 @@ export async function getPaginatedTokens(page = 1, itemsPerPage = 20, sortDirect
     } catch (error) {
         console.error('Error fetching tokens:', error);
         throw new Error('Failed to fetch tokens');
+    }
+}
+
+export async function getSocialUsers() {
+    try {
+        const users = await prisma.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                balanceUSD: true
+            }
+        })
+
+        for (const user of users) {
+            const userValue = await getUserValue(user.id)
+            user.userValue = userValue
+        }
+
+        users.sort((a, b) => b.userValue - a.userValue)
+        return users
+    } catch (error) {
+        console.error('Error fetching social users:', error);
+        throw new Error('Failed to fetch social users');
     }
 }

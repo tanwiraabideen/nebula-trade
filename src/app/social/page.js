@@ -4,17 +4,14 @@ import { redirect } from "next/navigation";
 import UserCreator from "../components/UserCreator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Balance from "../components/Balance";
-import { getUserDataByEmail, getUserValue } from "../actions/actions";
+import { getUserDataByEmail, getUserValue, getSocialUsers } from "../actions/actions";
 import { createUser } from "../actions/actions";
 import Value from "../components/UsdValue";
 import SideBar from "../components/SideBar";
 import Search from "../components/Search";
-import LeaderboardServer from "../components/LeaderboardServer";
-import Level from "../components/Level";
-import TokenCard from "../components/TokenCard";
-import UserTransaction from "../components/UserTransactions"
+import SocialLeaderboard from "../components/SocialLeaderboard";
 
-export default async function Dashboard() {
+export default async function Social() {
     const { isAuthenticated, getUser } = getKindeServerSession();
     const isLoggedIn = await isAuthenticated();
     const kindeUser = await getUser()
@@ -25,9 +22,6 @@ export default async function Dashboard() {
         redirect('/');
     }
 
-
-
-
     try {
         createUser(kindeUser.email)
         user = await getUserDataByEmail(kindeUser.email);
@@ -36,7 +30,6 @@ export default async function Dashboard() {
         }
     } catch (error) {
         console.error("Error fetching user data:", error);
-        // Handle the error appropriately, e.g., show an error message or redirect
         return <div className="text-white">Error: Unable to fetch user data</div>;
     }
 
@@ -45,13 +38,14 @@ export default async function Dashboard() {
     }
 
     const value = await getUserValue(user.id)
+    const socialUsers = await getSocialUsers()
 
     return (
         <div className="grid grid-cols-[auto_1fr] gap-0">
             <div className="w-fit">
-                <SideBar user={user} currentPage={"dashboard"}></SideBar>
+                <SideBar user={user} currentPage={"social"}></SideBar>
             </div>
-            <div id="dash" className="ml-32">
+            <div id="social" className="ml-32">
                 <div id="top-row" className="flex items-center justify-between">
                     <Search></Search>
                     <div id="balances" className="flex flex-row gap-4 mt-6 mr-7">
@@ -59,17 +53,8 @@ export default async function Dashboard() {
                         <Value user={user} myUser={myUser}></Value>
                     </div>
                 </div>
-                <div id="leaderboard&level" className="flex flex-row items-center justify-between">
-                    <LeaderboardServer email={user.email}></LeaderboardServer>
-                    <Level classes={'mr-10'} value={value}></Level>
-                </div>
-                <div id="token cards" className="mt-5 flex flex-row space-x-7 justify-center">
-                    <TokenCard coinId={'bitcoin'}></TokenCard>
-                    <TokenCard coinId={'ethereum'}></TokenCard>
-                    <TokenCard coinId={'solana'}></TokenCard>
-                </div>
-                <div className="flex justify-center">
-                    <UserTransaction email={user.email}></UserTransaction>
+                <div className="mt-8 flex justify-center mr-7">
+                    <SocialLeaderboard users={socialUsers} currentUserId={user.id} />
                 </div>
 
                 <LogoutLink><Button text={"logout"}></Button></LogoutLink>
