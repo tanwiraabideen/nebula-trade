@@ -3,7 +3,7 @@ services:
     image: postgres:16
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: SDVrgerFEWf
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: appdb
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -16,16 +16,8 @@ services:
   migrate:
     build:
       context: .
-      args:
-        - KINDE_ISSUER_URL
-        - KINDE_CLIENT_ID
-        - KINDE_CLIENT_SECRET
-        - KINDE_SITE_URL
-        - KINDE_POST_LOGOUT_REDIRECT_URL
-        - KINDE_POST_LOGIN_REDIRECT_URL
-        - DATABASE_URL
+      dockerfile: Dockerfile.migrate
     env_file: .env
-    command: node node_modules/prisma/build/index.js migrate deploy
     depends_on:
       db:
         condition: service_healthy
