@@ -2,11 +2,13 @@ import Link from "next/link"
 import Image from "next/image"
 import logo from '../../../public/logo.png'
 import placeholder from '../../../public/placeholder.jpeg'
-import { grey } from '@mui/material/colors';
+import { grey, red } from '@mui/material/colors';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import GroupIcon from '@mui/icons-material/Group';
 import StoreIcon from '@mui/icons-material/Store';
 import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import CompetitionPromo from "./CompetitionPromo";
 
 const NavItem = ({ href, icon: Icon, label, isActive }) => (
@@ -24,7 +26,6 @@ export default function SideBar({ user, currentPage }) {
         { id: 'dashboard', href: '/my-dash', icon: SpaceDashboardIcon, label: 'Dashboard' },
         { id: 'social', href: '/social', icon: GroupIcon, label: 'Social' },
         { id: 'market', href: '/market', icon: StoreIcon, label: 'Market' },
-        { id: 'settings', href: '/settings', icon: SettingsIcon, label: 'Settings' },
     ];
 
     return (
@@ -52,8 +53,17 @@ export default function SideBar({ user, currentPage }) {
                 ))}
             </nav>
 
-            <div className="mt-auto mb-4 w-full flex justify-center">
-                <CompetitionPromo />
+            <div className=" mb-4 w-full flex flex-col">
+                <div className="w-full flex justify-center">
+                    <CompetitionPromo />
+                </div>
+
+                <LogoutLink className="w-full">
+                    <div className="flex items-center hover:bg-slate-950 cursor-pointer duration-200 p-2 py-6">
+                        <LogoutIcon sx={{ color: red[600] }} fontSize="large" className="ml-5" />
+                        <h1 className="text-red-600 ml-16 font-bold">Logout</h1>
+                    </div>
+                </LogoutLink>
             </div>
         </aside>
     );

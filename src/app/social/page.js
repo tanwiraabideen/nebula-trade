@@ -1,5 +1,3 @@
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import Button from "../components/Button";
 import { redirect } from "next/navigation";
 import UserCreator from "../components/UserCreator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -57,7 +55,6 @@ export default async function Social() {
                     <SocialLeaderboard users={socialUsers} currentUserId={user.id} />
                 </div>
 
-                <LogoutLink><Button text={"logout"}></Button></LogoutLink>
                 <UserCreator></UserCreator>
             </div>
         </div>

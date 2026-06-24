@@ -1,16 +1,13 @@
-import { getTokenById } from "../../../actions/actions"
-import CryptoChart from "../../../components/CryptoChart"
-import Balance from "../../../components/Balance"
-import Value from "../../../components/UsdValue"
-import SearchBar from "../../../components/Search"
-import SideBar from "../../../components/SideBar"
+import { getTokenById, createUser, getUserDataByEmail } from "../../actions/actions"
+import CryptoChart from "../../components/CryptoChart"
+import Value from "../../components/UsdValue"
+import SearchBar from "../../components/Search"
+import SideBar from "../../components/SideBar"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation"
-import { createUser } from "../../../actions/actions"
-import { getUserDataByEmail } from "../../../actions/actions"
-import BuySell from "../../../components/BuySell"
-import TokenBalance from "../../../components/TokenBalance"
-import BalanceClient from "../../../components/BalanceClient"
+import BuySell from "../../components/BuySell"
+import TokenBalance from "../../components/TokenBalance"
+import BalanceClient from "../../components/BalanceClient"
 
 
 export default async function tokenPage({ params }) {

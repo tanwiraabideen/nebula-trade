@@ -1,0 +1,66 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: SDVrgerFEWf
+      POSTGRES_DB: appdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    build:
+      context: .
+      args:
+        - KINDE_ISSUER_URL
+        - KINDE_CLIENT_ID
+        - KINDE_CLIENT_SECRET
+        - KINDE_SITE_URL
+        - KINDE_POST_LOGOUT_REDIRECT_URL
+        - KINDE_POST_LOGIN_REDIRECT_URL
+        - DATABASE_URL
+    env_file: .env
+    command: node node_modules/prisma/build/index.js migrate deploy
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  webapp:
+    build:
+      context: .
+      args:
+        - KINDE_ISSUER_URL
+        - KINDE_CLIENT_ID
+        - KINDE_CLIENT_SECRET
+        - KINDE_SITE_URL
+        - KINDE_POST_LOGOUT_REDIRECT_URL
+        - KINDE_POST_LOGIN_REDIRECT_URL
+        - DATABASE_URL
+    ports:
+      - "3000:3000"
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  token-updater:
+    build:
+      context: .
+      dockerfile: token-updater/Dockerfile
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  postgres_data:

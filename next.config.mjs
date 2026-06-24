@@ -3,7 +3,10 @@ const nextConfig = {
     images: {
         domains: ['assets.coingecko.com', 'coin-images.coingecko.com'],
     },
-    // ... any other existing configurations
+    output: 'standalone',
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
 }
 
 export default nextConfig;

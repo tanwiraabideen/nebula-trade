@@ -1,8 +1,6 @@
 import { Inter } from "next/font/google";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { startAutomatedTokenUpdater } from "./actions/actions";
-
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({ subsets: ["latin"], weight: "400" })
@@ -13,7 +11,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  await startAutomatedTokenUpdater();
 
   return (
     <html lang="en">

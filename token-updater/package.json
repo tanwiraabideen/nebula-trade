@@ -1,0 +1,14 @@
+{
+    "name": "token-updater",
+    "type": "module",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "prisma": {
+        "schema": "../prisma/schema.prisma"
+    },
+    "dependencies": {
+        "@prisma/client": "^5.17.0",
+        "prisma": "^5.17.0"
+    }
+}

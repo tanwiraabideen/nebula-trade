@@ -1,10 +1,8 @@
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import Button from "../../components/Button";
 import { redirect } from "next/navigation";
-import UserCreator from "../../components/UserCreator";
+import UserCreator from "../../../components/UserCreator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import Balance from "../../components/Balance";
-import { getUserDataById } from "../actions/actions";
+import Balance from "../../../components/Balance";
+import { getUserDataById } from "../../../actions/actions";
 
 export default async function Dashboard({ params }) {
     const { isAuthenticated } = getKindeServerSession();
@@ -33,7 +31,6 @@ export default async function Dashboard({ params }) {
         <div>
             <h1 className="text-slate-50">Welcome, {user.name}</h1>
             <Balance user={user}></Balance>
-            <LogoutLink><Button text="Log out"></Button></LogoutLink>
             <UserCreator></UserCreator>
         </div>
     );
