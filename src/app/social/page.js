@@ -39,23 +39,27 @@ export default async function Social() {
     const socialUsers = await getSocialUsers()
 
     return (
-        <div className="grid grid-cols-[auto_1fr] gap-0">
-            <div className="w-fit">
-                <SideBar user={user} currentPage={"social"}></SideBar>
-            </div>
-            <div id="social" className="ml-32">
-                <div id="top-row" className="flex items-center justify-between">
-                    <Search></Search>
-                    <div id="balances" className="flex flex-row gap-4 mt-6 mr-7">
-                        <Balance email={user.email} name={user.name} balance={user.balanceUSD} myUser={myUser}></Balance>
-                        <Value user={user} myUser={myUser}></Value>
+        <div className="flex min-h-screen">
+            <SideBar user={user} currentPage="social" />
+
+            <div className="flex-1 px-8 py-6">
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <p className="text-slate-500 text-sm">Community</p>
+                        <h1 className="text-white font-bold text-2xl">Social</h1>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <Search />
+                        <Balance email={user.email} name={user.name} balance={user.balanceUSD} myUser={myUser} />
+                        <Value user={user} myUser={myUser} />
                     </div>
                 </div>
-                <div className="mt-8 flex justify-center mr-7">
+
+                <div className="flex justify-center">
                     <SocialLeaderboard users={socialUsers} currentUserId={user.id} />
                 </div>
 
-                <UserCreator></UserCreator>
+                <UserCreator />
             </div>
         </div>
     );

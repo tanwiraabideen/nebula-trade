@@ -58,52 +58,56 @@ export default function CryptoChart({ coin }) {
         return `$${value.toFixed(0)}`;
     };
 
-    return (
-        <Card className="w-1/2 bg-[#0f172a] text-white p-4">
-            <div className='flex flex-row items-center mb-5 my-2'>
-                <div id="icon" className="size-fit p-2 rounded-lg bg-slate-800 mr-3">
-                    <Image src={coin.icon} width={40} height={40}></Image>
-                </div>
-                <h2 className="text-xl font-bold mb-2">{coin.name}</h2>
-            </div>
+    const isPriceUp2 = coin.priceChangePercentage24h > 0;
 
-            <div className="flex items-center mb-7">
-                <span className="text-2xl font-bold mr-2">
-                    ${currentPrice.toLocaleString()}
-                </span>
-                <span className={`text-sm ${coin.priceChangePercentage24h > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                    {coin.priceChangePercentage24h.toFixed(2)}%
-                </span>
-            </div>
-            <CardContent className="p-0">
-                <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={chartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-                            <XAxis
-                                dataKey="time"
-                                stroke="#888888"
-                                axisLine={{ stroke: '#888888' }}
-                                tickLine={false}
-                            />
-                            <YAxis
-                                stroke="#888888"
-                                axisLine={{ stroke: '#888888' }}
-                                tickLine={false}
-                                tickFormatter={formatYAxis}
-                                domain={['dataMin', 'dataMax']}
-                                allowDataOverflow={false}
-                            />
-                            <Line
-                                type="monotone"
-                                dataKey="price"
-                                stroke={lineColor}
-                                dot={false}
-                                strokeWidth={2}
-                            />
-                        </LineChart>
-                    </ResponsiveContainer>
+    return (
+        <div className="w-full max-w-2xl bg-[#0d0d2b] border border-purple-900/40 rounded-2xl p-6 shadow-xl">
+            <div className="flex flex-row items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-[#12123a] border border-purple-900/30">
+                        <Image src={coin.icon} width={36} height={36} alt={coin.name} />
+                    </div>
+                    <div>
+                        <h2 className="text-white font-bold text-lg">{coin.name}</h2>
+                        <p className="text-slate-500 text-xs">{coin.symbol?.toUpperCase()}</p>
+                    </div>
                 </div>
-            </CardContent>
-        </Card>
+                <div className="text-right">
+                    <div className="text-2xl font-bold text-white">${currentPrice.toLocaleString()}</div>
+                    <div className={`text-sm font-medium mt-0.5 ${isPriceUp2 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {isPriceUp2 ? '+' : ''}{coin.priceChangePercentage24h.toFixed(2)}% (24h)
+                    </div>
+                </div>
+            </div>
+            <div className="h-[280px]">
+                <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={chartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                        <XAxis
+                            dataKey="time"
+                            stroke="#4c1d95"
+                            axisLine={{ stroke: '#4c1d95' }}
+                            tick={{ fill: '#64748b', fontSize: 12 }}
+                            tickLine={false}
+                        />
+                        <YAxis
+                            stroke="#4c1d95"
+                            axisLine={{ stroke: '#4c1d95' }}
+                            tick={{ fill: '#64748b', fontSize: 11 }}
+                            tickLine={false}
+                            tickFormatter={formatYAxis}
+                            domain={['dataMin', 'dataMax']}
+                            allowDataOverflow={false}
+                        />
+                        <Line
+                            type="monotone"
+                            dataKey="price"
+                            stroke={lineColor}
+                            dot={false}
+                            strokeWidth={2.5}
+                        />
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
+        </div>
     );
 }

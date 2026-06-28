@@ -18,7 +18,7 @@ ENV KINDE_POST_LOGIN_REDIRECT_URL=$KINDE_POST_LOGIN_REDIRECT_URL
 ENV DATABASE_URL=$DATABASE_URL
 
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --ignore-scripts
 
 COPY . .
 RUN apk add --no-cache openssl

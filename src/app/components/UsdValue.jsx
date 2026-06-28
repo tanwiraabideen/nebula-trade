@@ -1,4 +1,3 @@
-// user value needs to update every time token prices update, every 2 minutes
 'use client'
 import { useState, useEffect } from 'react';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -9,28 +8,27 @@ export default function Value({ myUser, user }) {
 
     useEffect(() => {
         const fetchValue = async () => {
-            const newValue = await getUserValue(user.id) // make this function and fix prop
+            const newValue = await getUserValue(user.id)
             if (newValue !== value) {
                 setValue(newValue)
             }
         }
         fetchValue()
-
         const intervalId = setInterval(fetchValue, 2000);
-
-        // Cleanup function
         return () => clearInterval(intervalId)
     }, [])
 
-    if (!value) {
-        return null
-    }
+    if (!value) return null
 
-    return (<div className="bg-slate-900 p-2 rounded-md shadow-md flex flex-row  w-48 items-center justify-center">
-        <AccountBalanceWalletIcon fontSize='large' color='primary'></AccountBalanceWalletIcon>
-        <div className='flex flex-col ml-4'>
-            <p className='text-sm mb-2 text-slate-500'>{myUser ? 'Your value' : `${user.name}'s account value`}</p>
-            <h1 className='text-xl text-slate-50 font-bold'>${Number(value.toFixed(2))}</h1>
+    return (
+        <div className="bg-[#0d0d2b] border border-purple-900/40 p-4 rounded-xl shadow-lg flex flex-row items-center gap-4 w-52">
+            <div className="p-2.5 rounded-lg bg-gradient-to-br from-violet-700/40 to-purple-900/40 border border-purple-700/30">
+                <AccountBalanceWalletIcon sx={{ color: '#a78bfa', fontSize: 24 }} />
+            </div>
+            <div className="flex flex-col">
+                <p className="text-xs text-slate-500 mb-1">{myUser ? 'Portfolio Value' : `${user.name}'s Value`}</p>
+                <h1 className="text-lg text-white font-bold">${Number(value.toFixed(2))}</h1>
+            </div>
         </div>
-    </div>)
+    )
 }

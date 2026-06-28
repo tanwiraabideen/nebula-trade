@@ -9,15 +9,22 @@ export default function Level({ value, classes }) {
     return (
         <div>
             {currentLevel ?
-                <div className={`bg-slate-900 w-fit p-5 flex flex-col rounded-2xl ${classes}`}>
+                <div className={`bg-[#0d0d2b] border border-purple-900/40 w-fit p-5 flex flex-col rounded-2xl shadow-lg ${classes}`}>
+                    <p className="text-slate-500 text-xs uppercase tracking-widest mb-3">Your Level</p>
                     <div className="flex flex-row items-center mb-4">
-                        <Image src={currentLevel.icon} width={50} height={50}></Image>
-                        <h1 className="font-bold text-slate-50 ml-4 text-2xl">{currentLevel.name}</h1>
+                        <div className="p-2 rounded-xl bg-[#12123a] border border-purple-900/30">
+                            <Image src={currentLevel.icon} width={42} height={42} alt={currentLevel.name} />
+                        </div>
+                        <h1 className="font-bold text-white ml-3 text-xl">{currentLevel.name}</h1>
                     </div>
-
-                    <ProgressBar lastIcon={<Image src={nextLevel.icon} height={25} width={25}></Image>} children={<LevelProgressChildren value={Number(value.toFixed(2))} currentLevel={currentLevel} nextLevel={nextLevel}></LevelProgressChildren>} classes={`w-96`} percentage={percentage}></ProgressBar>
+                    <ProgressBar
+                        lastIcon={<Image src={nextLevel.icon} height={22} width={22} alt={nextLevel.name} />}
+                        children={<LevelProgressChildren value={Number(value.toFixed(2))} currentLevel={currentLevel} nextLevel={nextLevel} />}
+                        classes="w-96"
+                        percentage={percentage}
+                    />
                 </div>
-                : <h1 className="text-white">Loading Level</h1>}
+                : <h1 className="text-slate-400 text-sm">Loading Level...</h1>}
         </div>
     )
 }

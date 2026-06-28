@@ -2,9 +2,9 @@ import Image from "next/image"
 
 export default function LevelProgressChildren({ value, currentLevel, nextLevel }) {
     return (
-        <div className="flex flex-row items-center w-full">
-            <Image src={currentLevel.icon} width={35} height={35} className={'rounded-full mr-auto ml-2'}></Image>
-            <h1 className="text-yellow-500 ml-auto mr-4">${value}/${nextLevel.valueRequired}</h1>
+        <div className="flex flex-row items-center w-full px-2">
+            <Image src={currentLevel.icon} width={28} height={28} className="rounded-full" alt={currentLevel.name} />
+            <span className="text-violet-200 text-xs font-semibold ml-auto">${value}<span className="text-white/60">/{nextLevel.valueRequired}</span></span>
         </div>
     )
 }

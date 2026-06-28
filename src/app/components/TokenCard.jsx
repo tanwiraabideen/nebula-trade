@@ -65,32 +65,33 @@ export default async function TokenCard({ coinId }) {
 
 
 
+    const isPositive = coin.priceChangePercentage24h > 0
+    const pctChange = Math.round((coin.priceChangePercentage24h + Number.EPSILON) * 100) / 100
+
     return (
         <Link href={`/market/token/${coin.id}`}>
-            <div className="bg-slate-900 rounded-lg flex flex-col w-72 p-5 cursor-pointer hover:scale-105 duration-200 hover:opacity-90">
+            <div className="bg-[#0d0d2b] border border-purple-900/40 rounded-xl flex flex-col w-72 p-5 cursor-pointer hover:border-purple-600/50 hover:shadow-xl hover:shadow-purple-900/20 hover:-translate-y-1 transition-all duration-200">
                 {coin ?
-                    <div id="parent">
-                        <div id="top-row" className="flex flex-row items-center">
-                            <div id="icon" className="size-fit p-2 rounded-lg bg-slate-800 mr-3">
-                                <Image src={coin.icon} width={40} height={40}></Image>
+                    <div>
+                        <div className="flex flex-row items-center">
+                            <div className="p-2.5 rounded-xl bg-[#12123a] border border-purple-900/30 mr-3">
+                                <Image src={coin.icon} width={36} height={36} alt={coin.name} />
                             </div>
                             <div className="flex flex-col">
-                                <h1 className="text-white text-xl mb-1">{coin.name}</h1>
-                                <p className="text-slate-400 text-sm">{coin.symbol.toUpperCase()}</p>
+                                <h1 className="text-white font-semibold">{coin.name}</h1>
+                                <p className="text-slate-500 text-xs mt-0.5">{coin.symbol.toUpperCase()}</p>
                             </div>
-                            {coin.priceChangePercentage24h > 0 ?
-                                <Image className="ml-auto" src={up} height={10} width={10}></Image> :
-                                <Image className="ml-auto" src={down} height={10} width={10}></Image>}
+                            <div className={`ml-auto px-2 py-1 rounded-lg text-xs font-semibold ${isPositive ? 'bg-emerald-900/30 text-emerald-400 border border-emerald-900/40' : 'bg-red-900/30 text-red-400 border border-red-900/40'}`}>
+                                {isPositive ? '+' : ''}{pctChange}%
+                            </div>
                         </div>
-                        <div id="bottom-row" className="flex flex-row items-center mt-4 space-x-10">
-                            <div id="price&percent" className="flex flex-col">
-                                <h1 className="text-white font-extrabold text-2xl mb-1">${coin.price}</h1>
-                                {coin.priceChangePercentage24h > 0 ?
-                                    <h2 className="text-green-700 font-bold text-lg">+{Math.round((coin.priceChangePercentage24h + Number.EPSILON) * 100) / 100}%</h2> :
-                                    <h2 className="text-red-700 font-bold text-lg">{Math.round((coin.priceChangePercentage24h + Number.EPSILON) * 100) / 100}%</h2>}
+                        <div className="flex flex-row items-end mt-4">
+                            <div className="flex flex-col">
+                                <h1 className="text-white font-bold text-2xl">${coin.price}</h1>
+                                <p className="text-slate-500 text-xs mt-1">24h change</p>
                             </div>
-                            <div id="graph" className="ml-auto">
-                                <TokenCardGraph prices={data}></TokenCardGraph>
+                            <div className="ml-auto">
+                                <TokenCardGraph prices={data} />
                             </div>
                         </div>
                     </div>

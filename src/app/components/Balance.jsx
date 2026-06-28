@@ -1,16 +1,16 @@
 "use client"
-import { useState, useEffect } from 'react';
 import PaidIcon from '@mui/icons-material/Paid';
-import { getUserTransactions } from '../actions/actions';
 
 export default function Balance({ myUser, balance, name }) {
-
-
-    return (<div className="bg-slate-900 p-2 rounded-md shadow-md flex flex-row w-48 items-center justify-center">
-        <PaidIcon fontSize='large' color='primary'></PaidIcon>
-        <div className='flex flex-col ml-4'>
-            <p className='text-sm mb-2 text-slate-500'>{myUser ? 'Your USD balance' : `${name}'s USD balance`}</p>
-            <h1 className='text-xl text-slate-50 font-bold'>{`$${balance}`}</h1>
+    return (
+        <div className="bg-[#0d0d2b] border border-purple-900/40 p-4 rounded-xl shadow-lg flex flex-row items-center gap-4 w-52">
+            <div className="p-2.5 rounded-lg bg-gradient-to-br from-violet-700/40 to-purple-900/40 border border-purple-700/30">
+                <PaidIcon sx={{ color: '#a78bfa', fontSize: 24 }} />
+            </div>
+            <div className="flex flex-col">
+                <p className="text-xs text-slate-500 mb-1">{myUser ? 'USD Balance' : `${name}'s Balance`}</p>
+                <h1 className="text-lg text-white font-bold">${balance}</h1>
+            </div>
         </div>
-    </div>)
+    )
 }

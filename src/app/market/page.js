@@ -88,66 +88,71 @@ export default function MarketPage() {
 
     return (
         <div className="flex min-h-screen">
-            {user && (
-                <div className="w-64 flex-shrink-0 border-r border-slate-700">
-                    <SideBar user={user} currentPage="market" />
+            {user && <SideBar user={user} currentPage="market" />}
+
+            <div className="flex-1 px-8 py-6">
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <p className="text-slate-500 text-sm">Browse</p>
+                        <h1 className="text-white font-bold text-2xl">Market</h1>
+                    </div>
+                    <SearchBar classes="w-72" />
                 </div>
-            )}
-            <div className="flex-grow p-6">
-                <div className="mb-6 w-full flex justify-center">
-                    <SearchBar classes={''} />
-                </div>
-                <div className="overflow-x-auto rounded-lg text-white flex flex-row justify-center">
-                    <table className="w-2/3 bg-slate-800 rounded-lg">
-                        <thead className="bg-slate-700 rounded-t-lg">
-                            <tr>
-                                <th className="w-16 px-4 py-2 text-left rounded-tl-lg">Icon</th>
-                                <th className="px-4 py-2 text-left">Name</th>
-                                <th className="w-24 px-4 py-2 text-left">Symbol</th>
-                                <th className="w-32 px-4 py-2 text-right">Price</th>
-                                <th className="w-32 px-4 py-2 text-right rounded-tr-lg">24h Change</th>
+
+                <div className="bg-[#0d0d2b] border border-purple-900/40 rounded-2xl overflow-hidden shadow-xl">
+                    <table className="w-full text-left">
+                        <thead>
+                            <tr className="bg-[#0a0a22] text-slate-500 text-xs uppercase tracking-wider">
+                                <th className="px-5 py-4 w-14"></th>
+                                <th className="px-5 py-4">Name</th>
+                                <th className="px-5 py-4 w-24">Symbol</th>
+                                <th className="px-5 py-4 text-right w-36">Price</th>
+                                <th className="px-5 py-4 text-right w-36">24h Change</th>
                             </tr>
                         </thead>
                         <tbody>
                             {tokens.map((token) => (
-                                <tr key={token.id} className="hover:bg-slate-600 cursor-pointer">
-                                    <td className="w-16 px-4 py-2">
-                                        <Image src={token.icon} alt={token.name} width={32} height={32} className="rounded-full" />
+                                <tr key={token.id} className="border-t border-purple-900/20 hover:bg-purple-900/10 cursor-pointer transition-colors duration-150">
+                                    <td className="px-5 py-3.5 w-14">
+                                        <div className="p-1.5 rounded-lg bg-[#12123a] border border-purple-900/30 w-fit">
+                                            <Image src={token.icon} alt={token.name} width={26} height={26} className="rounded-full" />
+                                        </div>
                                     </td>
-                                    <td className="px-4 py-2 font-medium">
-                                        <Link href={`/market/token/${token.id}`} className="hover:underline">
+                                    <td className="px-5 py-3.5">
+                                        <Link href={`/market/token/${token.id}`} className="text-white font-medium text-sm hover:text-violet-300 transition-colors">
                                             {token.name}
                                         </Link>
                                     </td>
-                                    <td className="w-24 px-4 py-2 text-gray-400">{token.symbol}</td>
-                                    <td className="w-32 px-4 py-2 text-right">${token.price.toFixed(2)}</td>
-                                    <td className={`w-32 px-4 py-2 text-right ${token.priceChangePercentage24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                        {token.priceChangePercentage24h.toFixed(2)}%
+                                    <td className="px-5 py-3.5 text-slate-500 text-sm">{token.symbol.toUpperCase()}</td>
+                                    <td className="px-5 py-3.5 text-right text-white font-medium text-sm">${token.price.toFixed(2)}</td>
+                                    <td className="px-5 py-3.5 text-right">
+                                        <span className={`text-xs font-semibold px-2 py-1 rounded-md ${token.priceChangePercentage24h >= 0 ? 'bg-emerald-900/30 text-emerald-400 border border-emerald-900/40' : 'bg-red-900/30 text-red-400 border border-red-900/40'}`}>
+                                            {token.priceChangePercentage24h >= 0 ? '+' : ''}{token.priceChangePercentage24h.toFixed(2)}%
+                                        </span>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-center items-center mt-6 space-x-4">
+
+                <div className="flex justify-center items-center mt-6 gap-4">
                     <button
                         onClick={handlePreviousPage}
                         disabled={currentPage === 1}
-                        className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-slate-600 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'
-                            }`}
+                        className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${currentPage === 1 ? 'bg-[#0d0d2b] border border-purple-900/30 text-slate-600 cursor-not-allowed' : 'bg-[#0d0d2b] border border-purple-700/50 text-purple-300 hover:bg-purple-900/20 hover:border-purple-600/60'}`}
                     >
-                        Previous
+                        ← Previous
                     </button>
-                    <span className="text-lg font-semibold text-white">
-                        Page {currentPage} of {totalPages}
+                    <span className="text-slate-400 text-sm px-2">
+                        Page <span className="text-white font-semibold">{currentPage}</span> of <span className="text-white font-semibold">{totalPages}</span>
                     </span>
                     <button
                         onClick={handleNextPage}
                         disabled={currentPage === totalPages}
-                        className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-slate-600 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'
-                            }`}
+                        className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${currentPage === totalPages ? 'bg-[#0d0d2b] border border-purple-900/30 text-slate-600 cursor-not-allowed' : 'bg-[#0d0d2b] border border-purple-700/50 text-purple-300 hover:bg-purple-900/20 hover:border-purple-600/60'}`}
                     >
-                        Next
+                        Next →
                     </button>
                 </div>
             </div>

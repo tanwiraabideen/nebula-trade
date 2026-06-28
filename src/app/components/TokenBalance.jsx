@@ -38,13 +38,13 @@ export default function TokenBalance({ classes, userId, tokenId }) {
     if (!tokenBalance || !token) return null
 
     return (
-        <div className={`${classes} size-fit p-3 flex flex-col items-center justify-center bg-slate-900 rounded-lg`}>
-            <h1 className="text-white mb-2 text-2xl">Your {token.name}</h1>
-            <div className="flex flex-row items-center">
-                <div id="icon" className="size-fit p-2 rounded-lg bg-slate-800 mr-3">
-                    <Image className="mr-auto" src={token.icon} width={30} height={30} alt={`${token.name} icon`} />
-                </div>
-                <h1 className="text-white mr-auto font-bold text-xl">${tokenBalance}</h1>
+        <div className={`${classes} bg-[#0d0d2b] border border-purple-900/40 rounded-xl p-4 flex items-center gap-4`}>
+            <div className="p-2.5 rounded-xl bg-[#12123a] border border-purple-900/30">
+                <Image src={token.icon} width={32} height={32} alt={`${token.name} icon`} />
+            </div>
+            <div>
+                <p className="text-slate-500 text-xs">Your {token.name} Holdings</p>
+                <h1 className="text-white font-bold text-xl mt-0.5">${tokenBalance}</h1>
             </div>
         </div>
     )

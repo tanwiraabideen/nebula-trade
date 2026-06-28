@@ -19,7 +19,7 @@ export function TokenCardGraph({ prices = [] }) {
   const lineColor = isPositiveTrend ? "#22c55e" : "#ef4444";
 
   return (
-    <div className='bg-slate-800 rounded-lg p-1' style={{ width: 100, height: 100 }}>
+    <div className='bg-[#12123a] border border-purple-900/30 rounded-xl p-1' style={{ width: 100, height: 100 }}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={chartData}
