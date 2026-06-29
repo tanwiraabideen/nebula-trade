@@ -4,8 +4,8 @@ A cryptocurrency trading simulation platform where users can learn to trade cryp
 
 ## Screenshots
 
-![NebulaTrade Screenshot 1](public/readme-imgs/Screenshot%202026-06-29%20at%201.26.43%20am.png)
-![NebulaTrade Screenshot 2](public/readme-imgs/Screenshot%202026-06-29%20at%203.06.36%20am.png)
+![NebulaTrade Screenshot 1](public/readme-imgs/screenshot-1.png)
+![NebulaTrade Screenshot 2](public/readme-imgs/screenshot-2.png)
 
 ## Features
 
